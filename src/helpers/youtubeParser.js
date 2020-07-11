@@ -24,12 +24,12 @@ export const convertToTime = (seconds) => {
 };
 
 export const getLink = ({videoId, seconds}) =>
-  'https://youtu.be/' + videoId + '?t=' + seconds;
+  `https://youtu.be/${videoId}?t=${seconds}`;
 
 export const getLinks = ({videoId, secondsArr}) =>
   secondsArr.reduce((acc, interval) => {
-    acc += 'https://youtu.be/' + videoId;
-    interval !== null ? (acc += '?t=' + interval + '\n') : null;
+    acc += `https://youtu.be/${videoId}`;
+    interval !== null ? (acc += `?t=${interval}\n`) : null;
     return acc;
   }, '');
 
