@@ -1,12 +1,11 @@
 import React, {useRef} from 'react';
 import StepIndicator from 'react-native-step-indicator';
-import customStyles from './../customStyles';
 import {getLabels} from '../helpers/getLabels';
 import Cuts from '../components/Cuts';
 import PressButton from '../components/PressButton';
 import PlayerScreen from './PlayerScreen';
 import {View} from 'react-native';
-import {styles} from '../styles';
+import {stepperStyle, styles} from '../styles';
 import {shareText} from '../helpers/shareText';
 import {getLinks} from '../helpers/youtubeParser';
 import {connect} from 'react-redux';
@@ -85,7 +84,7 @@ const Content = ({
         <PressButton text="Share" onPress={onShare} />
       </View>
       <StepIndicator
-        customStyles={customStyles}
+        stepperStyle={stepperStyle}
         currentPosition={cuts.length}
         labels={getLabels(cuts)}
         onPress={pressedTimeline}
