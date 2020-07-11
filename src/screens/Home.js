@@ -1,46 +1,62 @@
-import React, {Component} from 'react';
-import {Modal, TouchableHighlight, Text, StyleSheet, View} from 'react-native';
-import PlayerScreen from './PlayerScreen';
+import React, {useEffect} from 'react';
+import {Linking, SafeAreaView} from 'react-native';
 import RNExitApp from 'react-native-exit-app';
+import Top from '../components/Top';
+import Content from '../components/Content';
+import {styles} from '../styles';
+import {ScrollView} from 'react-native-gesture-handler';
+import {readUrl} from '../helpers/youtubeParser';
 
-class ModalExample extends Component {
-  state = {
-    modalVisible: true,
-  };
+import Shared from '../components/Shared/Shared';
+import {connect} from 'react-redux';
+import * as ACTIONS from '../actions';
 
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
+const Home = ({link, videoChanged}) => {
+  useEffect(() => {
+    const getUrlAsync = async () => {
+      // Get the deep link used to open the app
+      const initialUrl = await Linking.getInitialURL();
 
-  onCancel = () => {
-    RNExitApp.exitApp();
-  };
+      if (initialUrl !== null) {
+        let url = initialUrl.replace('u2bcut://open-url?url=', '');
 
-  render() {
-    return (
-      <View>
-        <Modal
-          presentationStyle="pageSheet"
-          animationType="slide"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onDismiss={() => {
-            alert('wow');
-          }}
-          onRequestClose={this.onCancel}>
-          <PlayerScreen onCancel={this.onCancel} />
-        </Modal>
-      </View>
-    );
-  }
-}
+        url = decodeURIComponent(url.replace(/\s/g, ''));
+        readUrl(url)
+          .then((parsedObject) => {
+            videoChanged(parsedObject);
+          })
+          .catch(() => {
+            alert('You are trying to open a non-video resource');
+          });
+      }
+    };
 
-export default ModalExample;
+    getUrlAsync();
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    paddingTop: 60,
-    backgroundColor: 'black',
-  },
+  const onCancel = () => RNExitApp.exitApp();
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        {link === null ? (
+          <Top onCancel={onCancel} videoChanged={videoChanged} />
+        ) : (
+          <Content onCancel={onCancel} />
+        )}
+        {/* <Shared shared={shared} /> */}
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+const mapStateToProps = (state) => ({
+  link: state.youtube.link,
+  videoId: state.youtube.videoId,
 });
+
+const mapDispatchToProps = (dispatch) => ({
+  videoChanged: (parsedObject) => dispatch(ACTIONS.videoChanged(parsedObject)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

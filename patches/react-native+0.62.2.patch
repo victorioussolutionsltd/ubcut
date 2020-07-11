@@ -113,15 +113,10 @@ index fa6f645..da7ca01 100644
 -#endif
  
  @end
-diff --git a/node_modules/react-native/index.js b/node_modules/react-native/index.js
-index 987fc7f..97dd284 100644
---- a/node_modules/react-native/index.js
-+++ b/node_modules/react-native/index.js
-@@ -9,7 +9,6 @@
-  */
- 
- 'use strict';
--
- import typeof AccessibilityInfo from './Libraries/Components/AccessibilityInfo/AccessibilityInfo';
- import typeof ActivityIndicator from './Libraries/Components/ActivityIndicator/ActivityIndicator';
- import typeof Button from './Libraries/Components/Button';
+diff --git a/node_modules/react-native/scripts/.packager.env b/node_modules/react-native/scripts/.packager.env
+new file mode 100644
+index 0000000..361f5fb
+--- /dev/null
++++ b/node_modules/react-native/scripts/.packager.env
+@@ -0,0 +1 @@
++export RCT_METRO_PORT=8081

@@ -77,18 +77,6 @@ target 'u2bcut' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
-
-  pod 'react-native-slider', :path => '../node_modules/@react-native-community/slider'
-
-  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
-
-  pod 'react-native-orientation', :path => '../node_modules/react-native-orientation'
-
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
-
-  pod 'RNExitApp', :path => '../node_modules/react-native-exit-app'
-
   target 'u2bcutTests' do
     inherit! :complete
     # Pods for testing
